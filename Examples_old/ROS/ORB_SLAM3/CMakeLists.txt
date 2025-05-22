@@ -12,21 +12,25 @@ MESSAGE("Build type: " ${ROS_BUILD_TYPE})
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
 
-# Check C++11 or C++0x support
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-   add_definitions(-DCOMPILEDWITHC11)
-   message(STATUS "Using flag -std=c++11.")
-elseif(COMPILER_SUPPORTS_CXX0X)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-   add_definitions(-DCOMPILEDWITHC0X)
-   message(STATUS "Using flag -std=c++0x.")
-else()
-   message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif()
+# # Check C++11 or C++0x support
+# include(CheckCXXCompilerFlag)
+# CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+# CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+# if(COMPILER_SUPPORTS_CXX11)
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#    add_definitions(-DCOMPILEDWITHC11)
+#    message(STATUS "Using flag -std=c++11.")
+# elseif(COMPILER_SUPPORTS_CXX0X)
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+#    add_definitions(-DCOMPILEDWITHC0X)
+#    message(STATUS "Using flag -std=c++0x.")
+# else()
+#    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+# endif()
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../../../cmake_modules)
 
@@ -42,6 +46,17 @@ find_package(Eigen3 3.1.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 
 include_directories(
+# ${Pangolin_SRC_DIR}/components/pango_core/include
+# ${Pangolin_SRC_DIR}/components/pango_display/include
+# /home/user1/GIT/Pangolin/components/pango_display/include
+# /home/user1/GIT/Pangolin/components/pango_core/include
+# /home/user1/GIT/Pangolin/components/pango_opengl/include
+# /home/user1/GIT/Pangolin/components/pango_windowing/include
+# /home/user1/GIT/Pangolin/components/pango_vars/include
+# /home/user1/GIT/Pangolin/components/pango_image/include
+# /home/user1/GIT/Pangolin/components/pango_plot/include
+# /home/user1/GIT/Pangolin/components/pango_video/include
+# /home/user1/GIT/cuda-samples/Common
 ${PROJECT_SOURCE_DIR}
 ${PROJECT_SOURCE_DIR}/../../../
 ${PROJECT_SOURCE_DIR}/../../../include
@@ -56,7 +71,23 @@ ${Pangolin_LIBRARIES}
 ${PROJECT_SOURCE_DIR}/../../../Thirdparty/DBoW2/lib/libDBoW2.so
 ${PROJECT_SOURCE_DIR}/../../../Thirdparty/g2o/lib/libg2o.so
 ${PROJECT_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
--lboost_system
+# /home/user1/GIT/Pangolin/build/libpango_image.so
+# /home/user1/GIT/Pangolin/build/libpango_tools.so
+# /home/user1/GIT/Pangolin/build/libpango_geometry.so
+# /home/user1/GIT/Pangolin/build/libpango_core.so
+# /home/user1/GIT/Pangolin/build/libpango_python.so
+# /home/user1/GIT/Pangolin/build/libpango_opengl.so
+# /home/user1/GIT/Pangolin/build/libpango_scene.so
+# /home/user1/GIT/Pangolin/build/libpango_video.so
+# /home/user1/GIT/Pangolin/build/libpango_packetstream.so
+# /home/user1/GIT/Pangolin/build/libpango_glgeometry.so
+# /home/user1/GIT/Pangolin/build/libpango_vars.so
+# /home/user1/GIT/Pangolin/build/libtinyobj.so
+# /home/user1/GIT/Pangolin/build/libpango_plot.so
+# /home/user1/GIT/Pangolin/build/libpango_windowing.so
+# /home/user1/GIT/Pangolin/build/libpango_display.so
+# /home/user1/GIT/Pangolin/build/pypangolin-0.9.3.data/purelib/pypangolin.cpython-310-x86_64-linux-gnu.so
+# -lboost_system
 )
 
 # Node for monocular camera
@@ -114,3 +145,6 @@ src/ros_stereo_inertial.cc
 target_link_libraries(Stereo_Inertial
 ${LIBS}
 )
+
+message(STATUS "Pangolin include dirs: ${Pangolin_INCLUDE_DIRS}")
+message(STATUS "Pangolin libraries: ${Pangolin_LIBRARIES}")

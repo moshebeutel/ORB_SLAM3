@@ -34,7 +34,9 @@ cd ..
 
 echo "Configuring and building ORB_SLAM3 ..."
 
+Pangolin_SRC_DIR=/home/user1/GIT/Pangolin
+
 mkdir build
 cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
-make -j4
+make 
